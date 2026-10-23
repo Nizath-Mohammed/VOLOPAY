@@ -1,14 +1,11 @@
 services:
   - type: web
     name: volopay-revenue-intelligence-inbox
-    runtime: docker
+    runtime: node
     region: oregon
     plan: free
     branch: main
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
-    envVars:
-      - key: PORT
-        value: 80
-    healthCheckPath: /health
+    buildCommand: cd app && npm install && npm run build
+    startCommand: npx serve -s app/dist -p $PORT
+    healthCheckPath: /
     pullRequestPreviewsEnabled: true
